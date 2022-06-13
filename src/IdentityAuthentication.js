@@ -1,16 +1,19 @@
 import {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
 
 function IdentityAuthentication() {
 
-  const [phoneNum, setPhoneNum ] = useState(["010","",""])
+  const [mobile, setMobile ] = useState(["010","",""])
   const [civilCode, setCivilCode] = useState(["",""]);
   const [userName, setUserName] = useState("");
 
+  const URL = "request"
+
 
   const updatePhoneNum = (pos, e) => { //인덱스 별로 휴대폰 state를 바꾸는 함수
-    const newPhoneNum = [...phoneNum];
-    newPhoneNum[pos]=e.target.value;
-    setPhoneNum(newPhoneNum);
+    const newMobile = [...mobile];
+    newMobile[pos]=e.target.value;
+    setMobile(newMobile);
   }
 
   const updateCivilCode = (pos, e) => { //앞,뒷자리 별로 주민번호 state를 변경
@@ -20,10 +23,37 @@ function IdentityAuthentication() {
   }
   
   const confirmInput = () => {
-    console.log(phoneNum);
-    console.log(civilCode);
-    console.log(userName);
+
+    const form = new FormData();
+    form.append("name",userName);
+    form.append("civilcodeFirst",civilCode[0]);
+    form.append("civilcodeLast",civilCode[1]);
+    form.append("mobile",mobile[0]+mobile[1]+mobile[2]);
+    postUserInfo(form).then((res)=>{
+      console.log(res);
+    })
+
   }
+
+
+
+  const postUserInfo = async (input) => {
+    try {
+      const response = await fetch("/request", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        body: JSON.stringify(input)
+      })
+      console.log(response);
+      return response;
+    }
+    catch{
+      console.log("정보를 서버로 전송하지 못했습니다.")
+    }
+  }
+
   
   return <div>
     <h1>비대면 대출을 위해 본인인증이 필요해요</h1>
@@ -31,18 +61,18 @@ function IdentityAuthentication() {
         <label>휴대폰번호</label>
       <div className="phoneInput">
         <input maxLength={3}
-               value={phoneNum[0]}
+               value={mobile[0]}
                onChange={(e)=>{
           updatePhoneNum(0, e);
         }
         }/>
         <input maxLength={4}
-               value={phoneNum[1]}
+               value={mobile[1]}
                onChange={(e)=>{
           updatePhoneNum(1, e);}
         }/>
         <input maxLength={4}
-               value={phoneNum[2]}
+               value={mobile[2]}
                onChange={(e)=>{
           updatePhoneNum(2, e);}
         }/>
@@ -74,7 +104,8 @@ function IdentityAuthentication() {
     </div>
 
 
-    <button className="confirmButton" onClick={()=>{confirmInput()}}>다음</button>
+      <button className="confirmButton" onClick={()=>{confirmInput()}}>다음</button>
+
 
   </div>
 }
