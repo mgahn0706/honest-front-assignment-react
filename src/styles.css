@@ -71,6 +71,7 @@ label{
   color:#FFFFFF;
   cursor: pointer;
   border: none;
+  transition: all ease 0.2s 0s;
 }
 
 
@@ -78,7 +79,9 @@ label{
   width: 100%;
   height: 72px;
   border-radius: 12px;
-  background: #0443A1;
+  background: #DDDFE2;
+  font-size: 18px;
   color: #FFFFFF;
   border: none;
+  transition: all ease 0.2s 0s;
 }
