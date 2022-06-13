@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {postUserInfo} from "./API/API";
 
 function IdentityAuthentication() {
@@ -6,6 +6,9 @@ function IdentityAuthentication() {
   const [mobile, setMobile ] = useState(["010","",""])
   const [civilCode, setCivilCode] = useState(["",""]);
   const [userName, setUserName] = useState("");
+  const [isFilled, setFilled] = useState(false);
+
+  useEffect(()=>{checkInfoFilled()},[userName,mobile,civilCode]);
 
   const updatePhoneNum = (pos, e) => { //인덱스 별로 휴대폰 state를 바꾸는 함수
     const newMobile = [...mobile];
@@ -34,7 +37,20 @@ function IdentityAuthentication() {
 
   }
 
-  
+  const checkInfoFilled = () => {
+    const isMobileFilled =
+        mobile[0].length===3 && mobile[1].length===4 && mobile[2].length===4;
+    const isCivilCodeFilled =
+        civilCode[0].length===6 && civilCode[1].length===7;
+    const isNameFilled = userName.length!==0;
+
+    setFilled(isMobileFilled && isCivilCodeFilled && isNameFilled);
+
+  }
+
+
+
+
   return <div className="container">
     <h1>비대면 대출을 위해 본인인증이 필요해요</h1>
 
@@ -87,8 +103,9 @@ function IdentityAuthentication() {
       </div>
     </div>
 
+    {isFilled ? <button className="confirmButton" onClick={()=>{confirmInput()}}>다음</button> :
+        <button className="confirmButtonDisable">다음</button>}
 
-      <button className="confirmButton" onClick={()=>{confirmInput()}}>다음</button>
 
 
   </div>
