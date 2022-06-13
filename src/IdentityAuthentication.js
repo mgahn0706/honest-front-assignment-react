@@ -7,9 +7,6 @@ function IdentityAuthentication() {
   const [civilCode, setCivilCode] = useState(["",""]);
   const [userName, setUserName] = useState("");
 
-  const URL = "request"
-
-
   const updatePhoneNum = (pos, e) => { //인덱스 별로 휴대폰 state를 바꾸는 함수
     const newMobile = [...mobile];
     newMobile[pos]=e.target.value;
@@ -38,22 +35,25 @@ function IdentityAuthentication() {
   }
 
   
-  return <div>
+  return <div className="container">
     <h1>비대면 대출을 위해 본인인증이 필요해요</h1>
+
     <div className="phone">
         <label>휴대폰번호</label>
-      <div className="phoneInput">
+      <div className="inputWrapper">
         <input maxLength={3}
                value={mobile[0]}
                onChange={(e)=>{
           updatePhoneNum(0, e);
         }
         }/>
+        <div className="dash"/>
         <input maxLength={4}
                value={mobile[1]}
                onChange={(e)=>{
           updatePhoneNum(1, e);}
         }/>
+        <div className="dash"/>
         <input maxLength={4}
                value={mobile[2]}
                onChange={(e)=>{
@@ -64,11 +64,12 @@ function IdentityAuthentication() {
 
     <div className="civil">
         <label>주민등록번호</label>
-      <div className="civilInput">
+      <div className="inputWrapper">
         <input placeholder="앞 6자리"
                maxLength={6}
                onChange={(e)=>{updateCivilCode(0,e)}}
         />
+        <div className="dash"/>
         <input placeholder="뒤 7자리"
                type={"password"}
                maxLength={7}
@@ -79,7 +80,7 @@ function IdentityAuthentication() {
 
     <div className="name">
       <label>이름</label>
-      <div className="nameInput">
+      <div className="inputWrapper">
         <input placeholder="이름을 입력해 주세요"
                onChange={(e)=>{setUserName(e.target.value)}}
         />
