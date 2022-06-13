@@ -1,5 +1,5 @@
-import {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import {useState} from "react";
+import {postUserInfo} from "./API/API";
 
 function IdentityAuthentication() {
 
@@ -35,25 +35,6 @@ function IdentityAuthentication() {
 
     })
 
-  }
-
-
-
-  const postUserInfo = async (input) => {
-    try {
-      const response = await fetch("/tech/frontend/personal/request", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        body: JSON.stringify(input)
-      })
-      return await response.json();
-
-    }
-    catch{
-      console.log("정보를 서버로 전송하지 못했습니다.")
-    }
   }
 
   
@@ -99,7 +80,7 @@ function IdentityAuthentication() {
     <div className="name">
       <label>이름</label>
       <div className="nameInput">
-        <input placeholder="이름을 이벽해 주세요"
+        <input placeholder="이름을 입력해 주세요"
                onChange={(e)=>{setUserName(e.target.value)}}
         />
       </div>
