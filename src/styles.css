@@ -4,4 +4,84 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  background: #F1F2F4;
+}
+
+.container{
+  margin: 80px auto 80px auto;
+  padding: 80px 160px;
+  width: 820px;
+  height: 823px;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+
+}
+
+h1{
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 48px;
+}
+
+.dash{
+  width: 30px;
+  height: 1px;
+  background: #DDDFE2;
+  margin: 4px;
+}
+
+input{
+  width: 100%;
+  height: 20px;
+  border: #DDDFE2 solid 1px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 20px 17px;
+}
+
+.inputWrapper{
+  width:100%;
+  margin-bottom: 48px;
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+input::placeholder{
+  color: #AEB3BB;
+}
+
+label{
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 24px;
+  color: #303339;
+
+}
+
+.confirmButton{
+  width: 100%;
+  height: 72px;
+  border-radius: 12px;
+  background: #0443A1;
+  font-size: 18px;
+  color:#FFFFFF;
+  cursor: pointer;
+  border: none;
+  transition: all ease 0.2s 0s;
+}
+
+
+.confirmButtonDisable{
+  width: 100%;
+  height: 72px;
+  border-radius: 12px;
+  background: #DDDFE2;
+  font-size: 18px;
+  color: #FFFFFF;
+  border: none;
+  transition: all ease 0.2s 0s;
 }
