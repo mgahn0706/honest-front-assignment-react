@@ -23,14 +23,16 @@ function IdentityAuthentication() {
   }
   
   const confirmInput = () => {
+    const identity = {
+      name: userName,
+      civilcodeFirst: civilCode[0],
+      civilcodeLast: civilCode[1],
+      mobile: mobile.join(""),
+    }
 
-    const form = new FormData();
-    form.append("name",userName);
-    form.append("civilcodeFirst",civilCode[0]);
-    form.append("civilcodeLast",civilCode[1]);
-    form.append("mobile",mobile[0]+mobile[1]+mobile[2]);
-    postUserInfo(form).then((res)=>{
-      console.log(res);
+    postUserInfo(identity).then((res)=>{
+      localStorage.setItem("token",res.response.token);
+
     })
 
   }
@@ -39,15 +41,15 @@ function IdentityAuthentication() {
 
   const postUserInfo = async (input) => {
     try {
-      const response = await fetch("/request", {
+      const response = await fetch("/tech/frontend/personal/request", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
         body: JSON.stringify(input)
       })
-      console.log(response);
-      return response;
+      return await response.json();
+
     }
     catch{
       console.log("정보를 서버로 전송하지 못했습니다.")
