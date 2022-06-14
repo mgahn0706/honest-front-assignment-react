@@ -1,0 +1,18 @@
+
+.resendButton{
+    width: 77px;
+    height: 61px;
+    margin-left: -77px;
+    background: none;
+    cursor: pointer;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2E85FF;
+    border-radius: 12px;
+}
+
+.resendButton:hover{
+    transition: all ease 0.2s 0s;
+    background: #DDDFE2;
+}

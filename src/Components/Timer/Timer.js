@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-
+import "./Timer.css"
 const Timer = ({setTimerRunning, resend}) => {
     const [time, setTime] = useState(3 * 60);
         useEffect(()=>{setTime(3*60);},[resend])

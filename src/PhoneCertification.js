@@ -1,8 +1,10 @@
 import {useEffect, useState} from "react";
 import {postPhoneCode, postUserInfo} from "./API/API";
-import Timer from "./Components/Timer";
+import Timer from "./Components/Timer/Timer";
 import {useNavigate} from "react-router";
 import {useAuthContext} from "./Context/AuthContext";
+import ConfirmButton from "./Components/ConfirmButton/ConfirmButton";
+import CertificationInput from "./Components/CertificationInput/CertificationInput";
 
 function PhoneCertification() {
     const {userInfo, token, setToken} = useAuthContext();
@@ -66,19 +68,10 @@ function PhoneCertification() {
               <label>인증번호 </label>
               <Timer setTimerRunning={setTimerRunning} resend={resend}/>
           </div>
-                 <div className="inputWrapper">
-              <input
-                  placeholder="번호 6자리를 입력해주세요"
-                  maxLength={6}
-                  value={code}
-                  onChange={(e)=>{setCode(e.target.value.replace(/[^0-9]/g,""))}}/>
-                     <button className="resendButton" onClick={()=>{resendInfo()}}>재전송</button>
-          </div>
-          {isLoading ? <button className="confirmButtonDisable" disabled>통신 중...</button> :
-              code.length===6 && isTimerRunning ? <button className="confirmButton" onClick={()=>{confirmCode()}}>본인인증하기</button> :
-                  <button className="confirmButtonDisable" disabled>본인인증하기</button>}
+        <CertificationInput code={code} setCode={setCode} resendInfo={resendInfo}/>
 
-
+          {isLoading ? <ConfirmButton text={"통신 중..."} disabled={true}/> :
+                <ConfirmButton text={"본인인증하기"} disabled={code.length!==6 || !isTimerRunning} onClick={()=>{confirmCode()}}/>}
 
       </div>
   )
