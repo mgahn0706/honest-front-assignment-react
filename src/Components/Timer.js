@@ -3,20 +3,21 @@ import {useEffect, useState} from "react";
 const Timer = ({setTimerRunning}) => {
     const [time, setTime] = useState(3 * 60);
 
-
     useEffect(()=>{
-        const countdown = setInterval(()=>{
-            const newTime = time-1;
-            if(newTime<0){
-                setTime(0);
-                setTimerRunning(false);
-                clearInterval(countdown);
-            }
-            else{
-                setTime(newTime);
-            }
-        }, 1000);
-        return () => {clearInterval(countdown)};
+            const countdown = setInterval(() => {
+                const newTime = time-1;
+                if (newTime < 0) {
+                    setTime(0);
+                    setTimerRunning(false);
+                    clearInterval(countdown);
+                } else {
+                    setTime(newTime);
+                }
+            }, 1000);
+            return () => {
+                clearInterval(countdown)
+            };
+
     });
 
     const formatTime = (currTime) => {
