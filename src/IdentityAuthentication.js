@@ -2,11 +2,12 @@ import {useEffect, useState} from "react";
 import {postUserInfo} from "./API/API";
 import {useNavigate} from "react-router";
 import {useAuthContext} from "./Context/AuthContext";
+import ConfirmButton from "./Components/ConfirmButton/ConfirmButton";
 
 function IdentityAuthentication() {
 
   const {setToken, setUserInfo} = useAuthContext();
-  const [mobile, setMobile ] = useState(["010","",""])
+  const [mobile, setMobile] = useState(["010","",""])
   const [civilCode, setCivilCode] = useState(["",""]);
   const [userName, setUserName] = useState("");
   const [isFilled, setFilled] = useState(false);
@@ -116,10 +117,9 @@ function IdentityAuthentication() {
         />
       </div>
     </div>
-      {isLoading ? <button className="confirmButtonDisable" disabled>인증문자 전송 중...</button> :
-          isFilled ? <button className="confirmButton" onClick={()=>{confirmInput()}}>다음</button> :
-          <button className="confirmButtonDisable" disabled>다음</button>}
-
+    { isLoading ? <ConfirmButton text={"인증문자 전송 중..."} disabled={true}/> :
+    isFilled ? <ConfirmButton text={"다음"} disabled={false} onClick={()=>{confirmInput()}}/> :
+    <ConfirmButton text={"다음"} disabled={true}/> }
   </div>
 }
 

@@ -63,30 +63,6 @@ label{
 
 }
 
-.confirmButton{
-  width: 100%;
-  height: 72px;
-  border-radius: 12px;
-  background: #0443A1;
-  font-size: 18px;
-  color:#FFFFFF;
-  cursor: pointer;
-  border: none;
-  transition: all ease 0.2s 0s;
-}
-
-
-.confirmButtonDisable{
-  width: 100%;
-  height: 72px;
-  border-radius: 12px;
-  background: #DDDFE2;
-  font-size: 18px;
-  color: #FFFFFF;
-  border: none;
-  transition: all ease 0.2s 0s;
-}
-
 .timer{
   color: #F34949;
   font-size: 16px;

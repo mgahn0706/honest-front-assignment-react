@@ -11,6 +11,7 @@ const Timer = ({setTimerRunning, resend}) => {
                     setTime(0);
                     setTimerRunning(false);
                     clearInterval(countdown);
+                    window.alert("인증시간이 만료되었습니다. 인증문자를 재전송해주세요.")
                 } else {
                     setTime(newTime);
                 }
