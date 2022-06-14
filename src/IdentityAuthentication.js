@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import {postUserInfo} from "./API/API";
 import {Link} from "react-router-dom";
 
-
 function IdentityAuthentication() {
 
   const [mobile, setMobile ] = useState(["010","",""])
@@ -14,13 +13,13 @@ function IdentityAuthentication() {
 
   const updatePhoneNum = (pos, e) => { //인덱스 별로 휴대폰 state를 바꾸는 함수
     const newMobile = [...mobile];
-    newMobile[pos]=e.target.value;
+    newMobile[pos]= e.target.value.replace(/[^0-9]/g,"");
     setMobile(newMobile);
   }
 
   const updateCivilCode = (pos, e) => { //앞,뒷자리 별로 주민번호 state를 변경
     const newCivilCode = [...civilCode];
-    newCivilCode[pos]=e.target.value;
+    newCivilCode[pos]= e.target.value.replace(/[^0-9]/g,"");
     setCivilCode(newCivilCode);
   }
   
@@ -84,11 +83,13 @@ function IdentityAuthentication() {
       <div className="inputWrapper">
         <input placeholder="앞 6자리"
                maxLength={6}
+               value={civilCode[0]}
                onChange={(e)=>{updateCivilCode(0,e)}}
         />
         <div className="dash"/>
         <input placeholder="뒤 7자리"
                type={"password"}
+               value={civilCode[1]}
                maxLength={7}
                onChange={(e)=>{updateCivilCode(1,e)}}
         />
@@ -99,17 +100,16 @@ function IdentityAuthentication() {
       <label>이름</label>
       <div className="inputWrapper">
         <input placeholder="이름을 입력해 주세요"
-               onChange={(e)=>{setUserName(e.target.value)}}
+               value={userName}
+               onChange={(e)=>{setUserName(e.target.value.replace(/[^ㄱ-힣]+$/g,""))}}
         />
       </div>
     </div>
     <Link to="/phone-certification">
       {isFilled ? <button className="confirmButton" onClick={()=>{confirmInput()}}>다음</button> :
           <button className="confirmButtonDisable" disabled>다음</button>}
+
     </Link>
-
-
-
 
   </div>
 }

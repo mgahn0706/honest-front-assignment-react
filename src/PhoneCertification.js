@@ -58,7 +58,8 @@ function PhoneCertification() {
               <input
                   placeholder="번호 6자리를 입력해주세요"
                   maxLength={6}
-                  onChange={(e)=>{setCode(e.target.value)}}/>
+                  value={code}
+                  onChange={(e)=>{setCode(e.target.value.replace(/[^0-9]/g,""))}}/>
                      <button className="resendButton" onClick={()=>{resendInfo()}}>재전송</button>
           </div>
           {code.length===6 && isTimerRunning ? <button className="confirmButton" onClick={()=>{confirmCode()}}>본인인증하기</button> :
