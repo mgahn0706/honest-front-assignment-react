@@ -1,7 +1,8 @@
 import {useEffect, useState} from "react";
 
-const Timer = ({setTimerRunning}) => {
+const Timer = ({setTimerRunning, resend}) => {
     const [time, setTime] = useState(3 * 60);
+        useEffect(()=>{setTime(3*60);},[resend])
 
     useEffect(()=>{
             const countdown = setInterval(() => {
