@@ -1,5 +1,7 @@
 import {useEffect, useState} from "react";
 import {postUserInfo} from "./API/API";
+import {Link} from "react-router-dom";
+
 
 function IdentityAuthentication() {
 
@@ -32,7 +34,6 @@ function IdentityAuthentication() {
 
     postUserInfo(identity).then((res)=>{
       localStorage.setItem("token",res.response.token);
-
     })
 
   }
@@ -102,9 +103,11 @@ function IdentityAuthentication() {
         />
       </div>
     </div>
+    <Link to="/phone-certification">
+      {isFilled ? <button className="confirmButton" onClick={()=>{confirmInput()}}>다음</button> :
+          <button className="confirmButtonDisable" disabled>다음</button>}
+    </Link>
 
-    {isFilled ? <button className="confirmButton" onClick={()=>{confirmInput()}}>다음</button> :
-        <button className="confirmButtonDisable">다음</button>}
 
 
 
