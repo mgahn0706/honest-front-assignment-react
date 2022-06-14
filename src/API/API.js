@@ -27,7 +27,7 @@ export const postPhoneCode = async (input) => {
             },
             body: JSON.stringify(input)
         })
-        return response.json();
+        return response;
 
     }
     catch(e){

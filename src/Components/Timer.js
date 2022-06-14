@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 
-const Timer = () => {
+const Timer = ({setTimerRunning}) => {
     const [time, setTime] = useState(3 * 60);
 
 
@@ -9,6 +9,7 @@ const Timer = () => {
             const newTime = time-1;
             if(newTime<0){
                 setTime(0);
+                setTimerRunning(false);
                 clearInterval(countdown);
             }
             else{
@@ -19,9 +20,9 @@ const Timer = () => {
     });
 
     const formatTime = (currTime) => {
-        const minute = parseInt(currTime/60);
-        const second = currTime%(60);
-        return `${minute}:${second}`;
+        const minute = `${parseInt(currTime/60)}`;
+        const second = `${currTime%(60)}`;
+        return second.length===2 ? minute+":"+second : minute+":0"+second;
     }
 
 
