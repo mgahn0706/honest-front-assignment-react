@@ -2,21 +2,18 @@ import {useEffect, useState} from "react";
 import {postPhoneCode, postUserInfo} from "./API/API";
 import Timer from "./Components/Timer";
 import {useNavigate} from "react-router";
+import {useAuthContext} from "./Context/AuthContext";
 
 function PhoneCertification() {
-
+    const {userInfo, token, setToken} = useAuthContext();
     const [code, setCode] = useState("");
-    const [token, setToken] = useState("");
     const [isTimerRunning, setTimerRunning] = useState(true);
     const [resend, setResend] = useState(false);
+    const [isLoading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(()=>{
-        setToken(localStorage.getItem("token"));
-    },[]);
 
     const confirmCode = () => {
-
         const codeInfo = {
             code: code,
             token: token,
@@ -26,6 +23,7 @@ function PhoneCertification() {
             navigate("/identity-authentication");
         }
         else {
+            setLoading(true);
             postPhoneCode(codeInfo).then((res) => {
                 if (res.status === 200) {
                     window.alert("휴대폰 인증에 성공했습니다");
@@ -36,12 +34,26 @@ function PhoneCertification() {
                 .catch(() => {
                     window.alert("인증번호 전송에 실패했습니다.");
                 })
+                .finally(()=>{
+                 setLoading(false);
+                }
+                )
         }
     }
 
     const resendInfo = () => {
         setResend(!resend);
         setTimerRunning(true);
+        setLoading(true)
+;        postUserInfo(userInfo).then((res)=>{
+            setToken(res.response.token);
+        })
+            .catch((e)=>{
+                window.alert("서버 통신에 실패했습니다.")
+            })
+            .finally(()=>{
+                setLoading(false);
+            })
     }
 
 
@@ -62,8 +74,11 @@ function PhoneCertification() {
                   onChange={(e)=>{setCode(e.target.value.replace(/[^0-9]/g,""))}}/>
                      <button className="resendButton" onClick={()=>{resendInfo()}}>재전송</button>
           </div>
-          {code.length===6 && isTimerRunning ? <button className="confirmButton" onClick={()=>{confirmCode()}}>본인인증하기</button> :
-              <button className="confirmButtonDisable" disabled>본인인증하기</button>}
+          {isLoading ? <button className="confirmButtonDisable" disabled>통신 중...</button> :
+              code.length===6 && isTimerRunning ? <button className="confirmButton" onClick={()=>{confirmCode()}}>본인인증하기</button> :
+                  <button className="confirmButtonDisable" disabled>본인인증하기</button>}
+
+
 
       </div>
   )

@@ -1,14 +1,17 @@
 import {useEffect, useState} from "react";
 import {postUserInfo} from "./API/API";
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router";
+import {useAuthContext} from "./Context/AuthContext";
 
 function IdentityAuthentication() {
 
+  const {setToken, setUserInfo} = useAuthContext();
   const [mobile, setMobile ] = useState(["010","",""])
   const [civilCode, setCivilCode] = useState(["",""]);
   const [userName, setUserName] = useState("");
   const [isFilled, setFilled] = useState(false);
-
+  const [isLoading, setLoading] = useState(false);
+  const navigate = useNavigate();
   useEffect(()=>{checkInfoFilled()},[userName,mobile,civilCode]);
 
   const updatePhoneNum = (pos, e) => { //인덱스 별로 휴대폰 state를 바꾸는 함수
@@ -31,9 +34,18 @@ function IdentityAuthentication() {
       mobile: mobile.join(""),
     }
 
+    setLoading(true);
+    setUserInfo(identity);
     postUserInfo(identity).then((res)=>{
-      localStorage.setItem("token",res.response.token);
+      setToken(res.response.token);
+      navigate("/phone-certification");
     })
+        .catch((e)=>{
+          window.alert("서버 통신에 실패했습니다.")
+        })
+        .finally(()=>{
+          setLoading(false);
+        })
 
   }
 
@@ -43,7 +55,6 @@ function IdentityAuthentication() {
     const isCivilCodeFilled =
         civilCode[0].length===6 && civilCode[1].length===7;
     const isNameFilled = userName.length!==0;
-
     setFilled(isMobileFilled && isCivilCodeFilled && isNameFilled);
 
   }
@@ -105,11 +116,9 @@ function IdentityAuthentication() {
         />
       </div>
     </div>
-    <Link to="/phone-certification">
-      {isFilled ? <button className="confirmButton" onClick={()=>{confirmInput()}}>다음</button> :
+      {isLoading ? <button className="confirmButtonDisable" disabled>인증문자 전송 중...</button> :
+          isFilled ? <button className="confirmButton" onClick={()=>{confirmInput()}}>다음</button> :
           <button className="confirmButtonDisable" disabled>다음</button>}
-
-    </Link>
 
   </div>
 }
