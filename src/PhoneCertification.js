@@ -1,14 +1,15 @@
 import {useEffect, useState} from "react";
 import {postPhoneCode, postUserInfo} from "./API/API";
+import Timer from "./Components/Timer";
 
 function PhoneCertification() {
 
     const [code, setCode] = useState("");
     const [token, setToken] = useState("");
 
-    useEffect(()=>{if(!token){
+    useEffect(()=>{
         setToken(localStorage.getItem("token"));
-    }})
+    },[]);
 
     const confirmCode = () => {
 
@@ -31,6 +32,7 @@ function PhoneCertification() {
       <div className="container">
         <h1>휴대폰 번호로 전송된 인증번호를 입력해 주세요</h1>
         <label>인증번호</label>
+          <Timer/>
           <div className="inputWrapper">
               <input
                   placeholder="번호 6자리를 입력해주세요"
